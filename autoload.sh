@@ -7,15 +7,18 @@
 # in your .bashrc or .bash_profile with
 #
 # `source dotfiles/autoload.sh`
+#
+# using ./ will not work as changes run
+# inside this script will then be discarded
 
 # Always get the directory that this script is set in
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Load all private bash files
 for PFILE in ${DOTFILES_DIR}/private/*
 do
     FILE_NAME=$(basename ${PFILE})
-    if [ -f PFILE ]
+    if [ -f $PFILE ]
     then
         echo "sourcing $FILE_NAME"
         source $PFILE
@@ -26,7 +29,7 @@ done
 for SFILE in ${DOTFILES_DIR}/src/*
 do
     FILE_NAME=$(basename ${SFILE})
-    if [ -f SFILE  ]
+    if [ -f $SFILE  ]
     then
         echo "sourcing $(basename ${SFILE})"
         source $SFILE
