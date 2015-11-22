@@ -6,7 +6,7 @@
 # the directory that it is placed in.
 
 # Global git ignores
-git config --global core.excludesfile `pwd`/.gitignore_global
+git config --global core.excludesfile `pwd`/config/.gitignore_global
 
 # Don't push all branches on git push
 git config --global push.default simple
