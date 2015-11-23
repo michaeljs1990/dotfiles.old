@@ -14,13 +14,25 @@
 # Always get the directory that this script is set in
 export DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Check flag for verbose output
+DOTFILE_VERBOSE=false
+while (( "$#" )); do
+  case "$1" in
+    -v | --verbose ) DOTFILE_VERBOSE=true;;
+  esac
+  shift
+done
+
 # Load all private bash files
 for PFILE in ${DOTFILES_DIR}/private/*
 do
     FILE_NAME=$(basename ${PFILE})
     if [ -f $PFILE ]
     then
-        echo "sourcing $FILE_NAME"
+        if [ "$DOTFILE_VERBOSE" = true ]
+        then
+            echo "sourcing $FILE_NAME"
+        fi
         source $PFILE
     fi
 done
@@ -31,7 +43,10 @@ do
     FILE_NAME=$(basename ${SFILE})
     if [ -f $SFILE  ]
     then
-        echo "sourcing $(basename ${SFILE})"
+        if [ "$DOTFILE_VERBOSE" = true ]
+        then
+            echo "sourcing $(basename ${SFILE})"
+        fi
         source $SFILE
     fi
 done

@@ -4,6 +4,8 @@
 
 source the `autoload.sh` file in your `.bashrc` or `.bash_profile` and optionally run `init.sh`. All files in the `src` and `private` directory will be auto loaded every time you open your terminal.
 
+Use `--verbose` or `-v` to turn on verbose logging.
+
 #### src
 
 All files that do not hold any private information and are applicable to a wider audience should be placed in here.
