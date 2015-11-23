@@ -16,11 +16,11 @@ export DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Check flag for verbose output
 DOTFILE_VERBOSE=false
-while true; do
+while (( "$#" )); do
   case "$1" in
-    -v | --verbose ) DOTFILE_VERBOSE=true; shift ;;
-    * ) break ;;
+    -v | --verbose ) DOTFILE_VERBOSE=true;;
   esac
+  shift
 done
 
 # Load all private bash files
