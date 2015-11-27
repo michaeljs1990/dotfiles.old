@@ -42,5 +42,5 @@ function autoload-directory() {
     done
 }
 
-autoload-directory "${DOTFILES_DIR}/private" true
-autoload-directory "${DOTFILES_DIR}/src" true
+autoload-directory "${DOTFILES_DIR}/private" $DOTFILE_VERBOSE
+autoload-directory "${DOTFILES_DIR}/src" $DOTFILE_VERBOSE
