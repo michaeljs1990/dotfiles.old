@@ -23,30 +23,24 @@ while (( "$#" )); do
   shift
 done
 
-# Load all private bash files
-for PFILE in ${DOTFILES_DIR}/private/*
-do
-    FILE_NAME=$(basename ${PFILE})
-    if [ -f $PFILE ]
-    then
-        if [ "$DOTFILE_VERBOSE" = true ]
+# Source entire directory in alphanumeric order
+# args
+#   $1 - (string) directory to be autoloaded without trailing /
+#   $2 - (bool) verbose
+function autoload-directory() {
+    for ALFILE in ${1}/*.sh
+    do
+        FILE_NAME=$(basename ${ALFILE})
+        if [ -f $ALFILE ]
         then
-            echo "sourcing $FILE_NAME"
+            if [ "$2" = true ]
+            then
+                echo "sourcing $FILE_NAME"
+            fi
+            source $ALFILE
         fi
-        source $PFILE
-    fi
-done
+    done
+}
 
-# Load all standard files
-for SFILE in ${DOTFILES_DIR}/src/*
-do
-    FILE_NAME=$(basename ${SFILE})
-    if [ -f $SFILE  ]
-    then
-        if [ "$DOTFILE_VERBOSE" = true ]
-        then
-            echo "sourcing $(basename ${SFILE})"
-        fi
-        source $SFILE
-    fi
-done
+autoload-directory "${DOTFILES_DIR}/private" true
+autoload-directory "${DOTFILES_DIR}/src" true
