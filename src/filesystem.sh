@@ -12,6 +12,23 @@
 #   $3 - drive to mount to on local machine (relative to /mnt)
 function osx-mount-ssh() {
     mkdir -p ~/Mounts/$3
-    sshfs $1:$2 ~/Mounts/$3
+    sshfs $1:$2 ~/Mounts/$3 -oauto_cache,reconnect,defer_permissions,noappledouble,negative_vncache
 }
 
+# rsync `daemon`
+# Optional:
+#  - brew install homebrew/dupes/rsync
+# args
+#   $1 - host name that you want to ssh to
+#   $2 - drive to mount to on remote machine
+#   $3 - drive to mount to on local machine (relative to /mnt)
+function osx-rsync-ssh() {
+    mkdir -p ~/Mounts/$3
+    rsync -az $1:$2/ ~/Mounts/$3
+    while [ true ]
+    do
+      echo "Syncing"
+      rsync -az ~/Mounts/$3/ $1:$2
+      sleep 1
+    done
+}
