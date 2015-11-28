@@ -42,5 +42,10 @@ function autoload-directory() {
     done
 }
 
+# Ease of use function for reloading
+function reload-dotfiles() {
+    source ~/.bash_profile
+}
+
 autoload-directory "${DOTFILES_DIR}/private" $DOTFILE_VERBOSE
 autoload-directory "${DOTFILES_DIR}/src" $DOTFILE_VERBOSE
