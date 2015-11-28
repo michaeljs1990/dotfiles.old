@@ -27,8 +27,7 @@ function osx-rsync-ssh() {
     rsync -az $1:$2/ ~/Mounts/$3
     while [ true ]
     do
-      echo "Syncing"
-      rsync -az ~/Mounts/$3/ $1:$2
+      rsync -cia --delete ~/Mounts/$3/ $1:$2
       sleep 1
     done
 }
