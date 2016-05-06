@@ -23,23 +23,28 @@ while (( "$#" )); do
   shift
 done
 
+ALLOWED_DIR=("private" "src")
+
 # Source entire directory in alphanumeric order
 # args
 #   $1 - (string) directory to be autoloaded without trailing /
-#   $2 - (bool) verbose
 function autoload-directory() {
-    for ALFILE in ${1}/*.sh
-    do
-        FILE_NAME=$(basename ${ALFILE})
-        if [ -f $ALFILE ]
-        then
-            if [ "$2" = true ]
-            then
-                echo "sourcing $FILE_NAME"
-            fi
-            source $ALFILE
-        fi
-    done
+  for FILE in $1/*
+  do
+    FILE_NAME=$(basename ${FILE})
+    if [ -f $FILE ]
+    then
+      if [ "$DOTFILE_VERBOSE" = true ]
+      then
+        echo "sourcing $FILE_NAME"
+      fi
+      source $FILE
+    elif [ -d $FILE ]
+    then
+      # autoload files in sub dir
+      autoload-directory "$FILE"
+    fi
+  done
 }
 
 # Ease of use function for reloading
@@ -47,5 +52,7 @@ function reload-dotfiles() {
     source ~/.bash_profile
 }
 
-autoload-directory "${DOTFILES_DIR}/private" $DOTFILE_VERBOSE
-autoload-directory "${DOTFILES_DIR}/src" $DOTFILE_VERBOSE
+for DIR in "${ALLOWED_DIR[@]}"
+do
+  autoload-directory "${DOTFILES_DIR}/$DIR"
+done
